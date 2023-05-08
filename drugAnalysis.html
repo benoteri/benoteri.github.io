@@ -1,0 +1,441 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Project</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="home-icon" style=" margin-top: 10px; font-size: 2em; color: white;"><i class="fa fa-home"></i></a>
+
+				<div class="inner">
+					<a href="index.html" class="image avatar"><img src="images/Ben.jpg" alt="" /></a>
+					<h1><strong>I am Benedict Oteri</strong><br><b>and I analyse data for lunch.<br />
+						Data Analyst | Data Scientist<br /></b>
+					</h1>
+				</div>
+			</header>
+
+		<!-- Main -->
+		
+			<div id="main">
+                <h1 style="font-size: 50px;">  <U>DRUG REVIEW ANALYSIS PROJECT</U>  </h1>
+				<div id="logo" style="align-self: start; ">
+					<img src="images/DrugReview.jpg" style="height: 320px;width: 800px; object-fit: cover;">
+				</div>
+				<!-- One -->
+					
+						<ul class="actions">
+							<li><a href="https://github.com/benoteri/Data_science_Portfolio/blob/main/ExploreDR.ipynb" class="button">View Full Notebook Code</a></li>
+						</ul>
+					</section>
+
+				<!-- Three -->
+					<!-- Introduction section -->
+	<section id="introduction">
+		<h2>Introduction</h2>
+		<p>The drug review dataset contains patient reviews on specific drugs, along with related conditions and ratings 
+            reflecting overall patient satisfaction. In this project,
+             we will explore the dataset to answer various research questions and gain insights into the drugs and conditions 
+             represented in the data.</p>
+	</section>
+	
+	<!-- Research Questions section -->
+	<section id="research-questions">
+        <h2>Research Questions</h2>
+        <ol>
+            <li style="margin-bottom: 10px; font-size: 18px; font-weight: bold;color: #4b4b4b;">What is the most popular drug?</li>
+            <li style="margin-bottom: 10px; font-size: 18px; font-weight: bold;color: #4b4b4b">What are the groups/classifications of drugs used?</li>
+            <li style="margin-bottom: 10px; font-size: 18px; font-weight: bold;color: #4b4b4b">Which drug has the best review?</li>
+            <li style="margin-bottom: 10px; font-size: 18px; font-weight: bold;color: #4b4b4b">How many drugs do we have?</li>
+            <li style="margin-bottom: 10px; font-size: 18px; font-weight: bold;color: #4b4b4b">The number of drugs per condition?</li>
+            <li style="margin-bottom: 10px; font-size: 18px; font-weight: bold;color: #4b4b4b">Number of patients that searched on a particular drug?</li>
+            <li style="margin-bottom: 10px; font-size: 18px; font-weight: bold;color: #4b4b4b">How genuine the review is?</li>
+            <li style="margin-bottom: 10px; font-size: 18px; font-weight: bold;color: #4b4b4b">How many reviews are positive, negative or neutral?</li>
+            <li style="margin-bottom: 10px; font-size: 18px; font-weight: bold;color: #4b4b4b">Correlation between rating and review and users who found the review useful?</li>
+            <li style="margin-bottom: 10px; font-size: 18px; font-weight: bold;color: #4b4b4b">Distribution of rating?</li>
+            <li style="margin-bottom: 10px; font-size: 18px; font-weight: bold;color: #4b4b4b">Amount of review made per year and per month?</li>
+        </ol>
+    </section>
+    
+
+	<!-- Methodology section -->
+	<section id="methodology">
+		<h2>Methodology</h2>
+		<p>This dataset contains patient reviews on specific drugs along with related conditions and a 10-star rating reflecting overall patient satisfaction.
+             The dataset includes features such as the drug name, condition name, patient review, rating from a range of 1 to 10 stars, date of review entry, 
+             and number of users who found the review useful. 
+             The dataset was downloaded from the following link: https://www.kaggle.com/jessicali9530/kuc-hackathon-winter-2018</p>
+		
+	</section>
+	<section id="results">
+		<h2>Results</h2>
+		<ol>
+		  <li style="color: red;">What is the most popular drug?</li>
+		  <!-- <button class="snippet-btn" data-toggle="collapse" data-target="#snippet1">View Code Snippet</button> -->
+		  <pre id="snippet1" class="collapse">
+			<code>
+#Loading the dataset
+import pandas as pd
+		  
+drug=pd.read_csv(r"C:\Users\HENRY\Downloads\drugsCom_raw\drugsComTrain_raw.tsv",sep ='\t')
+#Preview the data
+drug.head()
+#Top 15 most popular drugs
+drug['drugName'].value_counts().nlargest(15)
+		</code>
+		  </pre>
+		  <h4 style="color: rgb(50, 50, 255);"><b>Output:  </b>Levonorgestrel = 3657</h4> 
+		  
+		  <li style="color: red;">What are the groups/classifications of drugs used?</li>
+		  <pre id="snippet2" class="collapse">
+			<code>
+		drug_suffix = {
+					"alol":"Beta blocker or alpha blocker",
+					"ase":"Enzymes",
+					"azepam":"Antianxiety"
+				  ,"bactam":"Beta-lactamase inhibitors"
+				,"caine":"Local anesthetics"
+				,"cilin":"Penicillins"
+				,"conazole":"Antifungals"
+				,"cycline":"Antibiotics"
+				,"dralazine":"Antihypertensives"
+				,"flurane":"Inhalation Anesthetic"
+				,"lukast":"Leukotriene receptor antagonists"
+				,"mantadine":"Antivirals"
+				,"mycin":"Antivirals"
+				,"olol":"Beta blockers"
+				,"olone":"Steroids"
+				,"oxacin":"Antifungals"
+				,"parin":"Antibiotics"
+				,"peridol":"Antipsychotics"
+				,"poetin":"Erythropoeitin"
+				,"pril":"ACE Inhibitors"
+				,"sartan":"Angiotensin II receptor blockers"
+				,"sulfa":"Antibiotics"
+				,"thiazide":"Thiazide Diuretics"
+				,'vastatin':"HMG-CoA inhibitors"
+				}
+				#This function classifies drugs based on the name you have inputed.
+			def classify_D(drugname):
+  				for i in drug_suffix.keys():
+    			if drugname.endswith(i):
+      			print(True)
+      			print("The drug class is: ",drug_suffix[i])
+				#Classifying the drug class example
+				classify_D('Atenolol')
+			</code>
+		  </pre>
+		  <h4 style="color: rgb(50, 50, 255);"><b> The drug class is:   </b>  Beta blockers</h4> 
+
+		  <li style="color: red;">Which drug has the best review?</li>
+		  <pre id="snippet3" class="collapse">
+			<code>
+			<table class="dataframe" border="1">
+				<thead>
+				  <tr style="text-align: right;">
+					<th></th>
+					<th>Unnamed: 0</th>
+					<th>drugName</th>
+					<th>condition</th>
+					<th>review</th>
+					<th>rating</th>
+					<th>date</th>
+					<th>usefulCount</th>
+					<th>drug_class</th>
+					<th>sentiment value</th>
+					<th>sentiment label</th>
+					<th>sentiment_label</th>
+				  </tr>
+				</thead>
+				<tbody>
+				  <tr>
+					<th>1</th>
+					<td>95260</td>
+					<td>Guanfacine</td>
+					<td>ADHD</td>
+					<td>"My son is halfway through his fourth week of ...</td>
+					<td>8.0</td>
+					<td>April 27, 2010</td>
+					<td>192</td>
+					<td>None</td>
+					<td>0.168333</td>
+					<td>positive</td>
+					<td>positive</td>
+				  </tr>
+				  <tr>
+					<th>3</th>
+					<td>138000</td>
+					<td>Ortho Evra</td>
+					<td>Birth Control</td>
+					<td>"This is my first time using any form of birth...</td>
+					<td>8.0</td>
+					<td>November 3, 2015</td>
+					<td>10</td>
+					<td>None</td>
+					<td>0.179545</td>
+					<td>positive</td>
+					<td>positive</td>
+				  </tr>
+				  <tr>
+					<th>4</th>
+					<td>35696</td>
+					<td>Buprenorphine / naloxone</td>
+					<td>Opiate Dependence</td>
+					<td>"Suboxone has completely turned my life around...</td>
+					<td>9.0</td>
+					<td>November 27, 2016</td>
+					<td>37</td>
+					<td>None</td>
+					<td>0.194444</td>
+					<td>positive</td>
+					<td>positive</td>
+				  </tr>
+				  <tr>
+					<th>7</th>
+					<td>102654</td>
+					<td>Aripiprazole</td>
+					<td>Bipolar Disorde</td>
+					<td>"Abilify changed my life. There is hope. I was...</td>
+					<td>10.0</td>
+					<td>March 14, 2015</td>
+					<td>32</td>
+					<td>None</td>
+					<td>0.074107</td>
+					<td>positive</td>
+					<td>positive</td>
+				  </tr>
+				  <tr>
+					<th>9</th>
+					<td>48928</td>
+					<td>Ethinyl estradiol / levonorgestrel</td>
+					<td>Birth Control</td>
+					<td>"I had been on the pill for many years. When m...</td>
+					<td>8.0</td>
+					<td>December 8, 2016</td>
+					<td>1</td>
+					<td>None</td>
+					<td>0.079167</td>
+					<td>positive</td>
+					<td>positive</td>
+				  </tr>
+				</tbody>
+			  </table>
+			  </code>
+		  </pre>
+		  <h4 style="color: rgb(50, 50, 255);"><b> The drug with the best review: &nbsp;   </b>  Aripiprazole</h4> 
+
+		  <li style="color: red;">How many drugs do we have per class? Top 15</li>
+		  <pre id="snippet1" class="collapse">
+			<code>
+			plt.figure(figsize=(20,10))
+drug['drug_class'].value_counts().plot(kind='bar')
+plt.title("Distribution of Drugs by class")
+plt.show()
+</code>
+		  </pre>
+		  <img src="images/drugClass.png" alt="" style="max-width: 100%;">
+		  <b>OBSERVATION</b><br>
+		  
+<ol style="font-size: small; color: #333333;">
+  <li style="font-size: medium;"><strong >Antifungals:</strong> This drug class is used to treat fungal infections, and it is not surprising that it is among the largest drug classes. Fungal infections can be difficult to treat and can affect various parts of the body, including the skin, nails, and lungs.</li>
+  <li style="font-size: medium;"><strong>Antianxiety:</strong> Anxiety disorders are among the most common mental health disorders, affecting millions of people worldwide. Antianxiety drugs are used to manage the symptoms of anxiety disorders, and they are also among the largest drug classes.</li>
+  <li style="font-size: medium;"><strong>Antivirals:</strong> Viral infections can be difficult to treat, and antiviral drugs are essential in managing these infections. With the emergence of new viruses and viral strains, the demand for antiviral drugs is increasing.</li>
+ </ol>
+		  <li style="color: red;">The number of drugs per condition?</li>
+		  <pre id="snippet2" class="collapse">
+		<code>
+			#THE NUMBER OF CONDITION
+			len(drug['condition'].unique())
+		</code>
+		  </pre>
+		  <h4 style="color: rgb(50, 50, 255);"><b> Output: &nbsp;   </b>  There are 885 drugs per condition</h4> 
+
+		  <li style="color: red;">What is the distribution of drugs per condition?</li>
+		  <pre id="snippet3" class="collapse">
+			<code>
+#Drugs per condition Top 15
+drug.groupby('condition')['drugName'].nunique().nlargest(15)
+plt.figure(figsize=(20,10))
+drug.groupby('condition')['drugName'].nunique().nlargest(15).plot(kind="bar")
+plt.title("Distribution of Drugs per Condition")
+plt.show()
+		</code>
+		  </pre>
+		  <img src="images/drugPerCon.png" alt="" style="max-width: 100%;">
+		  <h3 style="font-size: 1.5rem;">Drugs per Condition</h3>
+<ol>
+  <li style="color: black;"><b>Pain:</b> Pain is the condition with the highest number of drugs in the dataset, with a total of 200 drugs. 
+	This is not surprising as pain is a common condition that affects people of all ages and backgrounds. Pain medications come in different forms such as pills, patches, gels, and injections, and are used to manage acute or chronic pain.</li>
+  <li style="color: black;"><b>Birth Control:</b> Birth control is the second condition with the highest number of drugs, with a total of 173 drugs. 
+	Birth control medications come in different forms such as pills, patches, rings, and injections, and are used to prevent pregnancy.
+	 They work by inhibiting ovulation, thickening cervical mucus, or preventing fertilization.</li>
+  <li style="color: black;"><b>High Blood Pressure:</b> High blood pressure is the third condition with the highest number of drugs, with a total of 147 drugs. 
+	High blood pressure, also known as hypertension, is a common condition that affects millions of people worldwide.
+	 It is a major risk factor for heart disease, stroke, and kidney failure. 
+	 Medications for high blood pressure come in different forms such as pills, patches, and injections, and work by relaxing blood vessels 
+	 or reducing the amount of fluid in the body.</li>
+  <li style="color: black;"><b>Acne:</b> Acne is the fourth condition with the highest number of drugs, with a total of 120 drugs.
+	 Acne is a common skin condition that affects people of all ages, but is most common in teenagers. 
+	 Acne medications come in different forms such as creams, gels, and pills, and work by reducing inflammation, killing bacteria, or regulating oil production.</li>
+</ol>
+
+		  <li style="color: red;">How genuine the review is?</li>
+		  <pre id="snippet1" class="collapse">
+			<p>This function allows for it to be possible to determine the emotion behind text.</p>
+			<code>
+from textblob import TextBlob
+pip install -U textblob
+#this function gets the  numerical value of the blob
+def get_sentiment(text):
+    blob = TextBlob(text)
+    return blob.polarity
+#this function automaticlly determines numerical value(positive or negative)
+def get_sentiment_label(text):
+    blob = TextBlob(text)
+    if blob.polarity > 0:
+        result = 'positive'
+    elif blob.polarity <0
+result = 'negative'
+    else:
+        result = 'neutral'
+    return result
+	#Creating a column containing sentiment 
+drug['sentiment value'] = drug['review'].apply(get_sentiment)
+drug['sentiment_label'] = drug['review'].apply(get_sentiment_label)
+drug[['review','sentiment value','sentiment_label']]
+</code>
+		  </pre>
+		  <table class="dataframe" border="1">
+			<thead>
+			  <tr style="text-align: right;">
+				<th></th>
+				<th>review</th>
+				<th>sentiment value</th>
+				<th>sentiment_label</th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr>
+				<th>0</th>
+				<td>"It has no side effect, I take it in combinati...</td>
+				<td>0.000000</td>
+				<td>neutral</td>
+			  </tr>
+			  <tr>
+				<th>1</th>
+				<td>"My son is halfway through his fourth week of ...</td>
+				<td>0.168333</td>
+				<td>positive</td>
+			  </tr>
+			  <tr>
+				<th>2</th>
+				<td>"I used to take another oral contraceptive, wh...</td>
+				<td>0.067210</td>
+				<td>positive</td>
+			  </tr>
+			  <tr>
+				<th>3</th>
+				<td>"This is my first time using any form of birth...</td>
+				<td>0.179545</td>
+				<td>positive</td>
+			  </tr>
+			  <tr>
+				<th>4</th>
+				<td>"Suboxone has completely turned my life around...</td>
+				<td>0.194444</td>
+				<td>positive</td>
+			  </tr>
+			  <tr>
+				<th>...</th>
+				<td>...</td>
+				<td>...</td>
+				<td>...</td>
+			  </tr>
+			</tbody>
+		  </table>
+		  <li style="color: red;">How many reviews are positive, negative or neutral?</li>
+		  <pre id="snippet2" class="collapse">
+#The number of negative, positive and neutral reviews
+drug['sentiment_label'].value_counts()
+#Visualization
+drug['sentiment_label'].value_counts().plot(kind ='pie')
+		  </pre>
+		  <img src="images/pieChart.png" alt="" style="max-width: 100%;">
+
+		  
+		  <li style="color: red;">Correlation between rating and review and users who found the review useful?</li>
+		  <pre id="snippet3" class="collapse">
+			<code>
+#Correlation Between our sentiment and rating
+sns.lineplot(data = drug, x= 'rating',y='sentiment value')
+plt.show()
+</code>
+		  </pre>
+		  <img src="images/LinePlot.png" alt="" style="max-width: 100%;">
+		  <h3>OBSERVATION</h3>
+<p>As shown in the image above, there appears to be a positive correlation between the sentimental value of reviews and
+	 the associated rating. This suggests that reviews with a more positive sentiment tend to be associated with higher ratings.</p>
+
+		  <li style="color: red;">What is the distribution of rating?</li>
+		  <pre id="snippet3" class="collapse">
+			<code>
+			#Correlation between rating and sentiment
+sns.lineplot(data = drug, x= 'rating',y='sentiment value',hue ='sentiment_label')
+			</code>
+		  </pre>
+		  <img src="images/useFulCont.png" alt="" style="max-width: 100%;">
+		  <h3>Observation</h3>
+<p>There is a positive correlation between the usefulCount and rating of drugs, as shown in the image above</p>
+
+<p>The image illustrates that as the number of usefulCount increases, the rating also tends to increase. This suggests that drugs with a higher number of 
+	usefulCount tend to have higher ratings. However, it is important to note that correlation does not necessarily imply causation, and there may be other factors that influence the rating of drugs.</p>
+		  <li style="color: red;">Amount of reviews made per year and per month?</li>
+		  <pre id="snippet3" class="collapse">
+			<code>
+#Average Rating Per Day of Every Year
+drug.groupby('date')['rating'].mean().plot(figsize=(20,10))
+plt.title("Average Rating Per Day of Every Year")
+plt.show()
+</code>
+		  </pre>
+		  <img src="images/avgRate.png" alt="" style="max-width: 100%;">
+
+		  
+		</ol>
+	  </section>
+	  
+		
+		
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer">
+				<div class="inner">
+					<ul class="icons">
+						<li><a href="https://github.com/benoteri" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="https://t.me/benoteri" class="icon brands fa-telegram"><span class="label">Telegram</span></a></li>
+						<li><a href="benoteri@gmail.com?body=Message%20body%20text%20" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+					<ul class="copyright">
+						<li>&copy;2022 Oteri</li><li><a href="https://www.freeprivacypolicy.com/live/94a6ae2e-53c5-4bb4-84ba-6e689637c09d">Privacy Policy</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
